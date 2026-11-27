@@ -18,5 +18,12 @@ const source = join(here, 'entry.png');
 
 // The output directory is /output inside the grader, or MAKEFUN_OUTPUT_DIR locally.
 const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
-mkdirSync(outDir, { recursive: true });
-copyFileSync(source, join(outDir, 'entry.png'));
+const outFile = join(outDir, 'entry.png');
+
+// Copy the poster to the output path, creating the directory first.
+function publishPoster(from: string, to: string): void {
+  mkdirSync(dirname(to), { recursive: true });
+  copyFileSync(from, to);
+}
+
+publishPoster(source, outFile);
